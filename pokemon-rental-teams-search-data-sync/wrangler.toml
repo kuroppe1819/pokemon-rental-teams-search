@@ -1,0 +1,3 @@
+name = "pokemon-rental-teams-search-data-sync"
+main = "src/index.ts"
+compatibility_date = "2023-01-04"

@@ -2,9 +2,8 @@ import { Hono } from "hono";
 
 const app = new Hono();
 
-// app.post("/api/search", async (text) => {
-app.get("/api/search", async (context) => {
-  const { results } = await context.env.DB.prepare(
+app.get("/api/search", async (ctx) => {
+  const { results } = await ctx.env.DB.prepare(
     "SELECT * FROM tweet_info"
   ).all();
   return Response.json(results);
