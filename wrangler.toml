@@ -1,0 +1,8 @@
+name = "pokemon-rental-teams-search-api"
+main = "src/index.ts"
+compatibility_date = "2023-01-04"
+
+[[ d1_databases ]]
+binding = "DB" # i.e. available in your Worker on env.DB
+database_name = "pokemon-rental-teams"
+database_id = "58d50f73-ee57-4259-8ddc-69cbadf67b8c"
