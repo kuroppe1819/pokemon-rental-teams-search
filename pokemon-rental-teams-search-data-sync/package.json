@@ -11,6 +11,6 @@
   "scripts": {
     "start": "wrangler dev --test-scheduled",
     "deploy": "wrangler publish",
-    "db:init": "wrangler d1 execute pokemon-rental-teams --local --file=./schema.sql"
+    "db:init": "wrangler d1 execute pokemon-rental-teams --local --file=./../schema.sql"
   }
 }

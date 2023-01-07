@@ -2,20 +2,42 @@ export interface Env {
   DB: D1Database;
 }
 
+type RentalTeams = {
+  mediaKey: string;
+  tweetId: string;
+  authorId: string;
+  createdAt: string;
+  imageUrl: string;
+  text: string | undefined;
+};
+
 export default {
   async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext) {
     const sync = async () => {
-      env.DB.prepare(
-        "INSERT INTO tweet_info (post_id, author_id, created_at, image_url, tweet_text) VALUES (?, ?, ?, ?, ?);"
-      )
-        .bind(
-          "1608074878175019014",
-          "759031295309586432",
-          "2022-12-28T12:18:22.000Z",
-          "https://pbs.twimg.com/media/FlEG2LWaEAcHV1v.jpg",
-          "piyo"
+      const res = await fetch(
+        "https://stgb62i3bvdqyn4mblrdq7apha0xebpl.lambda-url.ap-northeast-1.on.aws/"
+      );
+      const rentalTeams = await (
+        await res.json<{ rentalTeams: RentalTeams[] }>()
+      ).rentalTeams;
+
+      for (let i = rentalTeams.length - 1; i >= 0; i--) {
+        const rentalTeam = rentalTeams[i];
+        console.log(JSON.stringify(rentalTeam));
+
+        await env.DB.prepare(
+          "INSERT INTO tweet_info (media_key, tweet_id, author_id, created_at, image_url, tweet_text) VALUES (?, ?, ?, ?, ?, ?);"
         )
-        .run();
+          .bind(
+            rentalTeam.mediaKey,
+            rentalTeam.tweetId,
+            rentalTeam.authorId,
+            rentalTeam.createdAt,
+            rentalTeam.imageUrl,
+            rentalTeam.text ?? null
+          )
+          .run();
+      }
     };
 
     ctx.waitUntil(sync());
