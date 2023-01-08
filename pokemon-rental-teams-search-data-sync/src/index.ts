@@ -1,5 +1,7 @@
 export interface Env {
   DB: D1Database;
+  POKEMON_RENTAL_TEAMS_RECENT_SEARCH_API_URL: string;
+  POKEMON_RENTAL_TEAMS_RECENT_SEARCH_API_KEY: string;
 }
 
 type RentalTeams = {
@@ -13,46 +15,50 @@ type RentalTeams = {
 
 export default {
   async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext) {
-    const sync = async () => {
-      // TODO: URL を環境変数から渡す
-      const res = await fetch(
-        "https://stgb62i3bvdqyn4mblrdq7apha0xebpl.lambda-url.ap-northeast-1.on.aws/"
-      );
-      const rentalTeams = await (
-        await res.json<{ rentalTeams: RentalTeams[] }>()
-      ).rentalTeams;
+    console.log("cron trigger fired!");
 
-      for (const rentalTeam of rentalTeams) {
-        const { results } = await env.DB.prepare(
-          "SELECT media_key FROM tweet_info WHERE media_key = ?"
-        )
-          .bind(rentalTeam.mediaKey)
-          .all<{ media_key: string }>();
+    const res = await fetch(env.POKEMON_RENTAL_TEAMS_RECENT_SEARCH_API_URL, {
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-Key": env.POKEMON_RENTAL_TEAMS_RECENT_SEARCH_API_KEY,
+      },
+    });
+    const rentalTeams = await (
+      await res.json<{ rentalTeams: RentalTeams[] }>()
+    ).rentalTeams;
 
-        if (results === undefined) {
-          throw new Error("Error: results is undefined");
-        }
+    console.log(JSON.stringify(rentalTeams));
+    console.log(`Rental teams length: ${rentalTeams.length}`);
 
-        if (results.length > 0) {
-          continue;
-        }
+    for (const rentalTeam of rentalTeams) {
+      const { results } = await env.DB.prepare(
+        "SELECT media_key FROM tweet_info WHERE media_key = ?"
+      )
+        .bind(rentalTeam.mediaKey)
+        .all<{ media_key: string }>();
 
-        await env.DB.prepare(
-          "INSERT INTO tweet_info (media_key, tweet_id, author_id, created_at, image_url, tweet_text) VALUES (?, ?, ?, ?, ?, ?);"
-        )
-          .bind(
-            rentalTeam.mediaKey,
-            rentalTeam.tweetId,
-            rentalTeam.authorId,
-            rentalTeam.createdAt,
-            rentalTeam.imageUrl,
-            rentalTeam.text ?? null
-          )
-          .run();
+      if (results === undefined) {
+        throw new Error("Error: results is undefined");
       }
-    };
 
-    ctx.waitUntil(sync());
-    console.log("Data sync succeeded!");
+      if (results.length > 0) {
+        continue;
+      }
+
+      await env.DB.prepare(
+        "INSERT INTO tweet_info (media_key, tweet_id, author_id, created_at, image_url, tweet_text) VALUES (?, ?, ?, ?, ?, ?);"
+      )
+        .bind(
+          rentalTeam.mediaKey,
+          rentalTeam.tweetId,
+          rentalTeam.authorId,
+          rentalTeam.createdAt,
+          rentalTeam.imageUrl,
+          rentalTeam.text ?? null
+        )
+        .run();
+    }
+
+    console.log("data sync succeeded!");
   },
 };
