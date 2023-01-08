@@ -5,7 +5,7 @@
   "scripts": {
     "start": "wrangler dev --local --persist",
     "deploy": "wrangler publish",
-    "db:init": "wrangler d1 execute pokemon-rental-teams --local --file=./schema.sql"
+    "db:init": "wrangler d1 execute pokemon-rental-teams --local --file=./../schema.sql"
   },
   "devDependencies": {
     "@cloudflare/d1": "^1.4.1",
