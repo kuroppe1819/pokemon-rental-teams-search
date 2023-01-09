@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "workspaces": [
-    "pokemon-rental-teams-search-api",
     "pokemon-rental-teams-search-app",
     "pokemon-rental-teams-search-data-sync"
   ]
