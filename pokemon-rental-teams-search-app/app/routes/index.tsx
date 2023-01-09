@@ -1,6 +1,10 @@
 import type { LoaderArgs } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
+import Card from "~/components/Card";
+import Footer from "~/components/Footer";
+import Heading from "~/components/Heading";
+import SearchInput from "~/components/SearchInput";
 
 type Tweet = {
   mediaKey: string;
@@ -29,13 +33,19 @@ export default function Index() {
   const tweets = useLoaderData<typeof loader>();
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <h1>Pokemon Rental Teams Search</h1>
-      <ul>
-        {tweets.map((tweet, i) => (
-          <li key={i}>{JSON.stringify(tweet)}</li>
+    <main className="sm:container sm:mx-auto">
+      <div className="my-16">
+        <Heading />
+      </div>
+      <div className="mx-64 mb-8">
+        <SearchInput />
+      </div>
+      <ul className="grid grid-cols-3 gap-8">
+        {tweets.map((tweet) => (
+          <Card key={tweet.mediaKey} />
         ))}
       </ul>
-    </div>
+      <Footer />
+    </main>
   );
 }
