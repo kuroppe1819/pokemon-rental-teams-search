@@ -1,22 +1,10 @@
 import type { LoaderArgs } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
-import Card from "~/components/Card";
+import TweetCard from "~/components/TweetCard";
 import Footer from "~/components/Footer";
 import Heading from "~/components/Heading";
 import SearchInput from "~/components/SearchInput";
-
-type Tweet = {
-  mediaKey: string;
-  tweetId: string;
-  authorId: string;
-  createdAt: string;
-  imageUrl: string;
-  text: string | undefined;
-  username: string;
-  name: string;
-  profileImageUrl: string | undefined;
-};
 
 export const loader = async ({ context, params }: LoaderArgs) => {
   const db = context.DB as D1Database;
@@ -40,9 +28,9 @@ export default function Index() {
       <div className="mx-64 mb-8">
         <SearchInput />
       </div>
-      <ul className="grid grid-cols-3 gap-8">
+      <ul className="grid grid-cols-2 gap-8">
         {tweets.map((tweet) => (
-          <Card key={tweet.mediaKey} />
+          <TweetCard key={tweet.media_key} tweet={tweet as Tweet} />
         ))}
       </ul>
       <Footer />
