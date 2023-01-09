@@ -2,9 +2,9 @@ import { Hono } from "hono";
 
 const app = new Hono();
 
-app.get("/api/search", async (ctx) => {
+app.get("/api/teams/all", async (ctx) => {
   const { results } = await ctx.env.DB.prepare(
-    "SELECT * FROM tweet_info"
+    "SELECT * FROM tweets INNER JOIN users ON tweets.author_id = users.author_id;"
   ).all();
   return Response.json(results);
 });
