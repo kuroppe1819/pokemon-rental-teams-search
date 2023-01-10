@@ -21,14 +21,14 @@ export default function Index() {
   const tweets = useLoaderData<typeof loader>();
 
   return (
-    <main className="sm:container sm:mx-auto">
-      <div className="my-16">
+    <main className="container mx-auto px-20">
+      <div className="mt-32 mb-16">
         <Heading />
       </div>
-      <div className="mx-64 mb-8">
+      <div className="mx-48 mb-16">
         <SearchInput />
       </div>
-      <ul className="grid grid-cols-2 gap-8">
+      <ul className="grid grid-cols-3 gap-8">
         {tweets.map((tweet) => (
           <TweetCard key={tweet.media_key} tweet={tweet as Tweet} />
         ))}

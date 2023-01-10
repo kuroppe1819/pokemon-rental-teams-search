@@ -1,6 +1,6 @@
 export default function TweetCard({ tweet }: { tweet: Tweet }) {
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+    <div className="min-w-min bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
       <a href="#">
         <img className="rounded-t-lg" src={tweet.image_url} alt="" />
       </a>
