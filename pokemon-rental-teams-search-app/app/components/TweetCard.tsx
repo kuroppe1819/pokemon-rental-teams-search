@@ -22,6 +22,11 @@ export default function TweetCard({ tweet }: { tweet: Tweet }) {
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
           {tweet.tweet_text}
         </p>
+        {tweet.tweet_text !== undefined && (
+          <p className="mb-3 font-normal text-gray-700">
+            {tweet.tweet_text.replace(/(.*)\shttps:\/\/t.co\/.*$/, "$1")}
+          </p>
+        )}
       </div>
     </div>
   );
