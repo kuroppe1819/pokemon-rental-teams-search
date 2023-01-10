@@ -21,8 +21,8 @@ export default function Index() {
   const tweets = useLoaderData<typeof loader>();
 
   return (
-    <main className="container mx-auto px-4 sm:px-20">
-      <div className="mt-32 mb-16">
+    <main className="container mx-auto mt-32 px-4 sm:px-20">
+      <div className="mb-16">
         <Heading />
       </div>
       <div className="xl:mx-24 2xl:mx-48 mb-16">
