@@ -1,9 +1,15 @@
 export default function TweetCard({ tweet }: { tweet: Tweet }) {
   return (
-    <div className="min-w-min bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-      <a href="#">
-        <img className="rounded-t-lg" src={tweet.image_url} alt="" />
-      </a>
+    <div className="min-w-min bg-white border border-gray-200 rounded-lg shadow-md">
+      {/* TODO: alt にポケモンのタグを設定する */}
+      <img
+        className="rounded-t-lg"
+        src={tweet.image_url}
+        alt=""
+        onClick={() => {
+          console.log("aaa");
+        }}
+      />
       <div className="p-5">
         <div className="flex">
           <img
@@ -11,17 +17,17 @@ export default function TweetCard({ tweet }: { tweet: Tweet }) {
             src={tweet.profile_image_url}
           />
           <div className="ml-3">
-            <p className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <a
+              className="text-xl font-bold tracking-tight text-gray-900 hover:underline"
+              href={`https://twitter.com/${tweet.username}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {tweet.name}
-            </p>
-            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-              @{tweet.username}
-            </p>
+            </a>
+            <p className="mb-3 font-normal text-gray-700">@{tweet.username}</p>
           </div>
         </div>
-        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          {tweet.tweet_text}
-        </p>
         {tweet.tweet_text !== undefined && (
           <p className="mb-3 font-normal text-gray-700">
             {tweet.tweet_text.replace(/(.*)\shttps:\/\/t.co\/.*$/, "$1")}

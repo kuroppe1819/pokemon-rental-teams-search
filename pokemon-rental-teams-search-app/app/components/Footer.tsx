@@ -1,9 +1,9 @@
 export default function Heading() {
   return (
-    <footer className="p-4 bg-white sm:p-6 dark:bg-gray-900">
-      <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+    <footer className="p-4 bg-white sm:p-6">
+      <hr className="my-6 border-gray-200 sm:mx-auto lg:my-8" />
       <div className="sm:flex sm:items-center sm:justify-between">
-        <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+        <span className="text-sm text-gray-500 sm:text-center">
           © 2023{" "}
           <a href="" className="hover:underline">
             kuroppe1819
@@ -11,10 +11,7 @@ export default function Heading() {
           . All Rights Reserved.
         </span>
         <div className="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
-          <a
-            href="#"
-            className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-          >
+          <a href="#" className="text-gray-500 hover:text-gray-900">
             <svg
               className="w-5 h-5"
               fill="currentColor"
@@ -25,10 +22,7 @@ export default function Heading() {
             </svg>
             <span className="sr-only">Twitter page</span>
           </a>
-          <a
-            href="#"
-            className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-          >
+          <a href="#" className="text-gray-500 hover:text-gray-900">
             <svg
               className="w-5 h-5"
               fill="currentColor"
