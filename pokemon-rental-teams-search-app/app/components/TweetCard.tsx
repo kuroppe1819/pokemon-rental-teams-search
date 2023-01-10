@@ -1,6 +1,6 @@
 export default function TweetCard({ tweet }: { tweet: Tweet }) {
   return (
-    <div className="min-w-min bg-white border border-gray-200 rounded-lg shadow-md">
+    <div className="bg-white border border-gray-200 rounded-lg shadow-md">
       {/* TODO: alt にポケモンのタグを設定する */}
       <img
         className="rounded-t-lg"
@@ -11,7 +11,7 @@ export default function TweetCard({ tweet }: { tweet: Tweet }) {
         }}
       />
       <a
-        className="inline-block p-5 h-64 hover:bg-gray-100"
+        className="inline-block p-5 w-full hover:bg-gray-100"
         href={`https://twitter.com/${tweet.author_id}/status/${tweet.tweet_id}`}
         target="_blank"
         rel="noopener noreferrer"
@@ -34,7 +34,7 @@ export default function TweetCard({ tweet }: { tweet: Tweet }) {
           </div>
         </div>
         {tweet.tweet_text !== undefined && (
-          <p className="mb-3 font-normal text-gray-700 text-ellipsis overflow-hidden">
+          <p className="lg:h-36 mb-3 font-normal text-gray-700 text-ellipsis overflow-hidden">
             {tweet.tweet_text.replace(/(.*)\shttps:\/\/t.co\/.*$/, "$1")}
           </p>
         )}
