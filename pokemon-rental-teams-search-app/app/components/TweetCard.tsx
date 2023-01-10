@@ -10,7 +10,12 @@ export default function TweetCard({ tweet }: { tweet: Tweet }) {
           console.log("aaa");
         }}
       />
-      <div className="p-5">
+      <a
+        className="inline-block p-5 h-64 hover:bg-gray-100"
+        href={`https://twitter.com/${tweet.author_id}/status/${tweet.tweet_id}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <div className="flex">
           <img
             className="w-12 h-12 rounded-full"
@@ -29,11 +34,11 @@ export default function TweetCard({ tweet }: { tweet: Tweet }) {
           </div>
         </div>
         {tweet.tweet_text !== undefined && (
-          <p className="mb-3 font-normal text-gray-700">
+          <p className="mb-3 font-normal text-gray-700 text-ellipsis overflow-hidden">
             {tweet.tweet_text.replace(/(.*)\shttps:\/\/t.co\/.*$/, "$1")}
           </p>
         )}
-      </div>
+      </a>
     </div>
   );
 }
