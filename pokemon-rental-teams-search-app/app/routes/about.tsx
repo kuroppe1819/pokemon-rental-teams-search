@@ -9,20 +9,45 @@ export default function About() {
         <Heading text="About us" />
       </div>
       <main className="container px-4 sm:px-20 flex items-center flex-col grow">
-        <div className="mt-6 mb-12 text-gray-900 font-normal">
-          <p className="font-normal mb-2">
-            Pokemon Rental Teams Searchに関する質問や改善要望があれば、{" "}
-            <a
-              className="text-blue-800 hover:underline font-normal"
-              href="https://twitter.com/mys_x101"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Twitter
-            </a>{" "}
-            の DM にご連絡ください。。
-          </p>
-        </div>
+        <ul className="mt-6 mb-12 text-gray-900 font-normal">
+          <li className="mb-6">
+            <h3 className="text-lg font-medium">
+              Pokemon Rental Teams Search について
+            </h3>
+            <p>
+              Pokemon Rental Teams Search（以下、「本サービス」といいます。）は
+              Twitter に公開されているレンタルチームを検索できるサービスです。
+            </p>
+          </li>
+          <li className="mb-6">
+            <h3 className="text-lg font-medium">管理者について</h3>
+            <p>
+              管理者のもやし丸と申します。本サービスは私個人で開発、運用しております。
+            </p>
+            <p>
+              本サービスに関する質問や改善要望があれば、
+              <a
+                className="text-blue-800 hover:underline font-normal"
+                href="https://twitter.com/mys_x101"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Twitter
+              </a>{" "}
+              の DM でご連絡ください。。
+            </p>
+          </li>
+          <li className="mb-6">
+            <h3 className="text-lg font-medium">権利帰属</h3>
+            <p>
+              ポケットモンスター・ポケモン・Pokémonは任天堂・クリーチャーズ・ゲームフリークの登録商標です。
+            </p>
+            <p>本サービスは、上記の企業様とは一切関連性はありません。</p>
+            <p>
+              当サイトが提供する独自の文章やプログラムの所有権及び知的財産権は当方に帰属します。
+            </p>
+          </li>
+        </ul>
         <div>
           <LinkButton text="トップに戻る" href="/" />
         </div>
