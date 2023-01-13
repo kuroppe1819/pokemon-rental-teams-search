@@ -1,25 +1,25 @@
 export default function Heading() {
   return (
-    <footer className="p-4 bg-white sm:p-6">
+    <footer className="w-full p-4 bg-white sm:p-6">
       <hr className="my-6 border-gray-200 sm:mx-auto lg:my-8" />
       <div className="sm:flex sm:items-center sm:justify-between">
         <span className="text-sm text-gray-500 sm:text-center">
           © 2023 kuroppe1819. All Rights Reserved.
         </span>
-        <ul className="flex flex-wrap items-center space-x-2 lg:space-x-6 mt-3 text-sm text-gray-500 sm:mt-0">
-          <li>
-            <a href="/about" className="hover:underline">
-              About
-            </a>
-          </li>
+        <ul className="flex flex-wrap items-center space-x-3 lg:space-x-4 mt-3 text-sm text-gray-500 sm:mt-0">
           <li>
             <a href="/privacy-policy" className="hover:underline">
               Privacy Policy
             </a>
           </li>
           <li>
-            <a href="/license" className="hover:underline">
-              License
+            <a href="/about" className="hover:underline">
+              About
+            </a>
+          </li>
+          <li>
+            <a href="/contact" className="hover:underline">
+              Contact
             </a>
           </li>
           <li>
