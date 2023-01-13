@@ -8,18 +8,18 @@ export default function Heading() {
         </span>
         <ul className="flex flex-wrap items-center space-x-3 lg:space-x-4 mt-3 text-sm text-gray-500 sm:mt-0">
           <li>
+            <a href="/about" className="hover:underline">
+              About us
+            </a>
+          </li>
+          <li>
             <a href="/privacy-policy" className="hover:underline">
               Privacy Policy
             </a>
           </li>
           <li>
-            <a href="/about" className="hover:underline">
-              About
-            </a>
-          </li>
-          <li>
-            <a href="/contact" className="hover:underline">
-              Contact
+            <a href="/terms" className="hover:underline">
+              Terms of service
             </a>
           </li>
           <li>
