@@ -8,7 +8,7 @@ export default function Contact() {
       <div className="mt-32">
         <Heading text="Contact" />
       </div>
-      <main className="container px-4 flex items-center flex-col grow">
+      <main className="container px-4 sm:px-20 flex items-center flex-col grow">
         <div className="mt-6 mb-12 text-gray-900 font-normal">
           <p className="text-gray-900 font-normal">
             お問い合わせは{" "}
