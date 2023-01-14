@@ -1,12 +1,15 @@
 import type { LoaderArgs } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
-import TweetCard from "~/components/TweetCard";
 import Footer from "~/components/Footer";
 import Heading from "~/components/Heading";
 import SearchInput from "~/components/SearchInput";
+import TweetCard from "~/components/TweetCard";
 
-export const loader = async ({ context, params }: LoaderArgs) => {
+export const loader = async ({ context, request, params }: LoaderArgs) => {
+  console.log(`search ${JSON.stringify(params)}`);
+  console.log(`request${JSON.stringify(request)}`);
+
   const db = context.DB as D1Database;
   const { results } = await db
     .prepare(
