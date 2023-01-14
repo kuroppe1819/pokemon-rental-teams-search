@@ -1,3 +1,5 @@
+import { Link } from "@remix-run/react";
+
 export default function Heading() {
   return (
     <footer className="w-full p-4 bg-white sm:p-6">
@@ -8,19 +10,23 @@ export default function Heading() {
         </span>
         <ul className="flex flex-wrap items-center space-x-3 lg:space-x-4 mt-3 text-sm text-gray-500 sm:mt-0">
           <li>
-            <a href="/about" className="hover:underline">
+            <Link to="/about" prefetch="intent" className="hover:underline">
               About us
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/privacy-policy" className="hover:underline">
+            <Link
+              to="/privacy-policy"
+              prefetch="intent"
+              className="hover:underline"
+            >
               Privacy Policy
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/terms" className="hover:underline">
+            <Link to="/terms" prefetch="intent" className="hover:underline">
               Terms of service
-            </a>
+            </Link>
           </li>
           <li>
             <a
