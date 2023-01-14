@@ -1,11 +1,12 @@
 import Image from "~/components/Image";
+import ImageModal from "./ImageModal";
 
 export default function TweetCard({ tweet }: { tweet: Tweet }) {
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-md">
       {/* TODO: alt にポケモンのタグを設定する */}
       <div className="rounded-t-lg overflow-hidden border-b">
-        <Image
+        <ImageModal
           src={tweet.image_url}
           alt={`Pokemon rental teams of ${tweet.username}`}
           fallbackSrc="/assets/no_image.svg"
