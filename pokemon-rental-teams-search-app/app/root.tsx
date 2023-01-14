@@ -14,9 +14,11 @@ export function links() {
 }
 
 export const meta: MetaFunction = () => ({
+  lang: "ja",
   charset: "utf-8",
-  title: "New Remix App",
   viewport: "width=device-width,initial-scale=1",
+  title: "Pokemon Rental Teams Search",
+  description: "ポケモンSV レンタルチーム検索サイト",
 });
 
 export default function App() {
