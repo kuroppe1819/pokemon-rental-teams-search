@@ -10,7 +10,7 @@ export const loader = async ({ context, params }: LoaderArgs) => {
   const db = context.DB as D1Database;
   const { results } = await db
     .prepare(
-      "SELECT * FROM tweets INNER JOIN users ON tweets.author_id = users.author_id;"
+      "SELECT * FROM tweets INNER JOIN users ON tweets.author_id = users.author_id ORDER BY created_at DESC;"
     )
     .all<Tweet>();
   const tweets = results ?? [];
