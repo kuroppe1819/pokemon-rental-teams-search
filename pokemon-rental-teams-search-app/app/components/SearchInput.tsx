@@ -1,7 +1,11 @@
 import { Form } from "@remix-run/react";
 import { useRef } from "react";
 
-export default function SearchInput() {
+type Props = {
+  defaultValue: string | null;
+};
+
+export default function SearchInput({ defaultValue }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -44,6 +48,7 @@ export default function SearchInput() {
           id="pokemon-search"
           className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
           placeholder="Search Pokemon..."
+          defaultValue={defaultValue ?? undefined}
           required
         />
       </div>

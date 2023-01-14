@@ -6,22 +6,30 @@ import Heading from "~/components/Heading";
 import SearchInput from "~/components/SearchInput";
 import TweetCard from "~/components/TweetCard";
 
-export const loader = async ({ context, request, params }: LoaderArgs) => {
-  console.log(`search ${JSON.stringify(params)}`);
-  console.log(`request${JSON.stringify(request)}`);
+export const loader = async ({ context, request }: LoaderArgs) => {
+  const keyword = new URL(request.url).searchParams.get("search");
 
-  const db = context.DB as D1Database;
-  const { results } = await db
-    .prepare(
-      "SELECT * FROM tweets INNER JOIN users ON tweets.author_id = users.author_id ORDER BY created_at DESC;"
-    )
-    .all<Tweet>();
-  const tweets = results ?? [];
-  return json(tweets);
+  if (keyword === null) {
+    const db = context.DB as D1Database;
+    const { results } = await db
+      .prepare(
+        "SELECT * FROM tweets INNER JOIN users ON tweets.author_id = users.author_id ORDER BY created_at DESC;"
+      )
+      .all<Tweet>();
+    return json({
+      keyword,
+      tweets: results ?? [],
+    });
+  } else {
+    return json({
+      keyword,
+      tweets: [],
+    });
+  }
 };
 
 export default function Index() {
-  const tweets = useLoaderData<typeof loader>();
+  const { keyword, tweets } = useLoaderData<typeof loader>();
 
   return (
     <div className="h-screen flex flex-col items-center">
@@ -30,13 +38,17 @@ export default function Index() {
       </div>
       <main className="container px-4 sm:px-20 grow">
         <div className="xl:mx-24 2xl:mx-48 mb-16">
-          <SearchInput />
+          <SearchInput defaultValue={keyword} />
         </div>
-        <ul className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-          {tweets.map((tweet) => (
-            <TweetCard key={tweet.media_key} tweet={tweet as Tweet} />
-          ))}
-        </ul>
+        {tweets.length === 0 ? (
+          <p className="text-center font-medium">{`「${keyword}」を含むレンタルチームは見つかりませんでした。`}</p>
+        ) : (
+          <ul className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+            {tweets.map((tweet) => (
+              <TweetCard key={tweet.media_key} tweet={tweet as Tweet} />
+            ))}
+          </ul>
+        )}
       </main>
       <Footer />
     </div>
