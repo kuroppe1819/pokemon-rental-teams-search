@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS pokemon_name;
+
+CREATE TABLE pokemon_name (id INTEGER PRIMARY KEY AUTOINCREMENT, media_key TEXT NOT NULL, name TEXT NOT NULL);
+
 INSERT INTO pokemon_name (media_key, name) VALUES ('3_1612103755390148610', 'ぺリッパー'),
 ('3_1612103755390148610', 'ゴルダック'),
 ('3_1612103755390148610', 'アマージョ'),
