@@ -69,7 +69,7 @@ export default {
 
       // ユーザーが登録済みか確認する
       const { results: selectAuthorIdResults } = await env.DB.prepare(
-        "SELECT author_id FROM users WHERE author_id = ?"
+        "SELECT DISTINCT author_id FROM users WHERE author_id = ?"
       )
         .bind(rentalTeam.user.authorId)
         .all<{ author_id: string }>();
@@ -78,7 +78,7 @@ export default {
         throw new Error("Error: selectAuthorIdResults is undefined");
       }
 
-      if (selectAuthorIdResults.length === 1) {
+      if (selectAuthorIdResults.length > 0) {
         // users テーブルにユーザー情報が登録されている場合は更新
         await env.DB.prepare(
           "UPDATE users SET username = ?, name = ?, profile_image_url = ? WHERE author_id = ?;"
