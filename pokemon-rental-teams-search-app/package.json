@@ -11,7 +11,8 @@
     "deploy:production": "npm run build && wrangler pages publish ./public",
     "start": "cross-env NODE_ENV=production npm run wrangler",
     "typecheck": "tsc -b",
-    "wrangler": "wrangler pages dev ./public --d1=DB --persist"
+    "wrangler": "wrangler pages dev ./public --d1=DB --persist",
+    "db:init": "wrangler d1 execute pokemon-rental-teams --local --file=./../schema.sql"
   },
   "dependencies": {
     "@remix-run/cloudflare": "^1.9.0",
