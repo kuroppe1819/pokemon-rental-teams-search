@@ -5,12 +5,12 @@
     "@cloudflare/d1": "^1.4.1",
     "@cloudflare/workers-types": "^4.20221111.1",
     "typescript": "^4.9.4",
-    "wrangler": "2.6.2"
+    "wrangler": "2.7.1"
   },
   "private": true,
   "scripts": {
     "start": "wrangler dev --test-scheduled",
-    "deploy": "wrangler publish",
+    "deploy:prod": "wrangler publish",
     "db:init": "wrangler d1 execute pokemon-rental-teams --local --file=./../schemas/init.sql",
     "db:insert:pokemon": "wrangler d1 execute pokemon-rental-teams --local --file=./../schemas/insert_pokemon_name.sql"
   }

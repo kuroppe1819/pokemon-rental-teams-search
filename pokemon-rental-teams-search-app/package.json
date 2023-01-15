@@ -8,7 +8,7 @@
     "dev:wrangler": "cross-env NODE_ENV=development npm run wrangler",
     "dev:css": "tailwindcss -w -i ./styles/app.css -o app/styles/app.css",
     "dev": "remix build && run-p \"dev:*\"",
-    "deploy:production": "npm run build && wrangler pages publish ./public",
+    "deploy:prod": "npm run build && wrangler pages publish ./public",
     "start": "cross-env NODE_ENV=production npm run wrangler",
     "typecheck": "tsc -b",
     "wrangler": "wrangler pages dev ./public --d1=DB --persist",
@@ -16,28 +16,28 @@
     "db:insert:pokemon": "wrangler d1 execute pokemon-rental-teams --local --file=./../schemas/insert_pokemon_name.sql"
   },
   "dependencies": {
-    "@remix-run/cloudflare": "^1.9.0",
-    "@remix-run/cloudflare-pages": "^1.9.0",
-    "@remix-run/react": "^1.9.0",
+    "@remix-run/cloudflare": "^1.10.1",
+    "@remix-run/cloudflare-pages": "^1.10.1",
+    "@remix-run/react": "^1.10.1",
     "cross-env": "^7.0.3",
-    "flowbite": "^1.6.0",
+    "flowbite": "^1.6.2",
     "flowbite-react": "^0.3.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^3.18.0",
-    "@remix-run/dev": "^1.9.0",
-    "@remix-run/eslint-config": "^1.9.0",
-    "@types/react": "^18.0.25",
-    "@types/react-dom": "^18.0.8",
+    "@cloudflare/workers-types": "^4.20221111.1",
+    "@remix-run/dev": "^1.10.1",
+    "@remix-run/eslint-config": "^1.10.1",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.10",
     "autoprefixer": "^10.4.13",
-    "eslint": "^8.27.0",
+    "eslint": "^8.32.0",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.4",
-    "typescript": "^4.8.4",
-    "wrangler": "^2.2.1"
+    "typescript": "^4.9.4",
+    "wrangler": "^2.7.1"
   },
   "engines": {
     "node": ">=16.13"
