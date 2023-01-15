@@ -26,14 +26,9 @@ export default function TweetCard({ tweet }: { tweet: Tweet }) {
             />
           </div>
           <div className="ml-3">
-            <a
-              className="text-xl font-bold tracking-tight text-gray-900 hover:underline"
-              href={`https://twitter.com/${tweet.username}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <div className="text-xl font-bold tracking-tight text-gray-900">
               {tweet.name}
-            </a>
+            </div>
             <p className="mb-3 font-normal text-gray-700">@{tweet.username}</p>
           </div>
         </div>

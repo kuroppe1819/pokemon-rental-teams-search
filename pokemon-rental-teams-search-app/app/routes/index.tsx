@@ -67,7 +67,9 @@ export default function Index() {
           <SearchInput defaultValue={keyword} />
         </div>
         {tweets.length === 0 ? (
-          <p className="text-center font-normal text-lg">{`「${keyword}」を含むレンタルチームは見つかりませんでした。`}</p>
+          <div className="flex justify-center">
+            <p className="font-normal text-lg">{`「${keyword}」を含むレンタルチームは見つかりませんでした。`}</p>
+          </div>
         ) : (
           <ul className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             {tweets.map((tweet) => (
