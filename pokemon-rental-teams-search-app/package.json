@@ -12,7 +12,8 @@
     "start": "cross-env NODE_ENV=production npm run wrangler",
     "typecheck": "tsc -b",
     "wrangler": "wrangler pages dev ./public --d1=DB --persist",
-    "db:init": "wrangler d1 execute pokemon-rental-teams --local --file=./../schema.sql"
+    "db:init": "wrangler d1 execute pokemon-rental-teams --local --file=./../schemas/init.sql",
+    "db:insert:pokemon": "wrangler d1 execute pokemon-rental-teams --local --file=./../schemas/insert_pokemon_name.sql"
   },
   "dependencies": {
     "@remix-run/cloudflare": "^1.9.0",

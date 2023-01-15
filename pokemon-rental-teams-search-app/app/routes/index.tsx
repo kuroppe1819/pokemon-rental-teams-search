@@ -8,22 +8,48 @@ import TweetCard from "~/components/TweetCard";
 
 export const loader = async ({ context, request }: LoaderArgs) => {
   const keyword = new URL(request.url).searchParams.get("search");
+  const db = context.DB as D1Database;
 
   if (keyword === null) {
-    const db = context.DB as D1Database;
-    const { results } = await db
+    // 検索クエリが存在しない場合
+    const { results: tweetResults } = await db
       .prepare(
         "SELECT * FROM tweets INNER JOIN users ON tweets.author_id = users.author_id ORDER BY created_at DESC;"
       )
       .all<Tweet>();
     return json({
       keyword,
-      tweets: results ?? [],
+      tweets: tweetResults ?? [],
     });
   } else {
+    // 検索クエリが存在する場合
+    const { results: pokemonNameResults } = await db
+      .prepare("SELECT DISTINCT media_key FROM pokemon_name WHERE name = ?;")
+      .bind(keyword)
+      .all<{ media_key: string }>();
+
+    // 検索クエリがヒットしなかった場合
+    if (pokemonNameResults === undefined || pokemonNameResults.length === 0) {
+      return json({
+        keyword,
+        tweets: [],
+      });
+    }
+
+    const { results: tweetResults } = await db
+      .prepare(
+        `SELECT * FROM tweets INNER JOIN users ON tweets.author_id = users.author_id WHERE media_key IN (?${",?".repeat(
+          pokemonNameResults.length - 1
+        )});`
+      )
+      .bind(...pokemonNameResults.map((v) => v.media_key))
+      .all<Tweet>();
+
+    console.log(tweetResults);
+
     return json({
       keyword,
-      tweets: [],
+      tweets: tweetResults ?? [],
     });
   }
 };
@@ -41,7 +67,7 @@ export default function Index() {
           <SearchInput defaultValue={keyword} />
         </div>
         {tweets.length === 0 ? (
-          <p className="text-center font-medium">{`「${keyword}」を含むレンタルチームは見つかりませんでした。`}</p>
+          <p className="text-center font-normal text-lg">{`「${keyword}」を含むレンタルチームは見つかりませんでした。`}</p>
         ) : (
           <ul className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             {tweets.map((tweet) => (
