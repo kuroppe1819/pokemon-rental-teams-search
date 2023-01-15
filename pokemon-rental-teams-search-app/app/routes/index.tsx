@@ -40,13 +40,10 @@ export const loader = async ({ context, request }: LoaderArgs) => {
       .prepare(
         `SELECT * FROM tweets INNER JOIN users ON tweets.author_id = users.author_id WHERE media_key IN (?${",?".repeat(
           pokemonNameResults.length - 1
-        )});`
+        )}) ORDER BY created_at DESC;`
       )
       .bind(...pokemonNameResults.map((v) => v.media_key))
       .all<Tweet>();
-
-    console.log(tweetResults);
-
     return json({
       keyword,
       tweets: tweetResults ?? [],
