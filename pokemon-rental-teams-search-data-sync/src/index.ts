@@ -78,21 +78,31 @@ export default {
         throw new Error("Error: selectAuthorIdResults is undefined");
       }
 
-      if (selectAuthorIdResults.length > 0) {
-        continue;
-      }
-
-      // users テーブルに が登録されていない場合は追加
-      await env.DB.prepare(
-        "INSERT INTO users (author_id, username, name, profile_image_url) VALUES (?, ?, ?, ?);"
-      )
-        .bind(
-          rentalTeam.user.authorId,
-          rentalTeam.user.username,
-          rentalTeam.user.name,
-          rentalTeam.user.profileImageUrl ?? null
+      if (selectAuthorIdResults.length === 1) {
+        // users テーブルにユーザー情報が登録されている場合は更新
+        await env.DB.prepare(
+          "UPDATE users SET username = ?, name = ?, profile_image_url = ? WHERE author_id = ?;"
         )
-        .run();
+          .bind(
+            rentalTeam.user.username,
+            rentalTeam.user.name,
+            rentalTeam.user.profileImageUrl ?? null,
+            rentalTeam.user.authorId
+          )
+          .run();
+      } else {
+        // users テーブルにユーザー情報が登録されていない場合は追加
+        await env.DB.prepare(
+          "INSERT INTO users (author_id, username, name, profile_image_url) VALUES (?, ?, ?, ?);"
+        )
+          .bind(
+            rentalTeam.user.authorId,
+            rentalTeam.user.username,
+            rentalTeam.user.name,
+            rentalTeam.user.profileImageUrl ?? null
+          )
+          .run();
+      }
     }
 
     console.log("data sync succeeded!");
