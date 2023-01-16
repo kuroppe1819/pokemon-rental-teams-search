@@ -6,18 +6,8 @@ type Props = {
 };
 
 export default function SearchInput({ defaultValue }: Props) {
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (inputRef.current === null) {
-      return;
-    }
-    location.href = `/index?search=${inputRef.current.value}`;
-  };
-
   return (
-    <Form onSubmit={onSubmit}>
+    <Form action="/" method="get">
       <label
         className="mb-2 text-sm font-medium text-gray-900 sr-only"
         htmlFor="pokemon-search"
@@ -43,11 +33,11 @@ export default function SearchInput({ defaultValue }: Props) {
           </svg>
         </div>
         <input
-          ref={inputRef}
           type="search"
           id="pokemon-search"
           className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
           placeholder="ポケモン名"
+          name="search"
           defaultValue={defaultValue ?? undefined}
           required
         />
