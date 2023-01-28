@@ -3,6 +3,7 @@ import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import Footer from "~/components/Footer";
 import Heading from "~/components/Heading";
+import Paginate from "~/components/Paginate";
 import SearchInput from "~/components/SearchInput";
 import TweetCard from "~/components/TweetCard";
 import { Query } from "~/functions/query";
@@ -11,8 +12,8 @@ export const loader = async ({ context, request }: LoaderArgs) => {
   const perPage = 3;
   const pageParams = new URL(request.url).searchParams.get("page");
   const pageParamsInt = parseInt(pageParams ?? "");
-  const page = isNaN(pageParamsInt) ? 1 : pageParamsInt;
-  const offset = (page - 1) * perPage;
+  const currentPage = isNaN(pageParamsInt) ? 1 : pageParamsInt;
+  const offset = (currentPage - 1) * perPage;
 
   if (offset < 0 || offset > Number.MAX_SAFE_INTEGER) {
     throw new Error("offset exceeds threshold value.");
@@ -26,18 +27,15 @@ export const loader = async ({ context, request }: LoaderArgs) => {
     // 検索クエリが存在しない場合
 
     const total = await query.getTotalCount();
-
-    if (total === undefined) {
-      throw new Error("total is undefined.");
-    }
-
+    const pageCount = Math.ceil(total / perPage);
     const tweets = await query.getTweets({ perPage, offset });
 
     return json({
-      keyword,
       tweets: tweets ?? [],
       options: {
-        pageCount: Math.ceil(total / perPage),
+        keyword,
+        currentPage,
+        pageCount,
       },
     });
   } else {
@@ -51,13 +49,17 @@ export const loader = async ({ context, request }: LoaderArgs) => {
     const mediaKeys = await query.getMediaKeysWithPokemonName({ keyword });
     if (mediaKeys === undefined || mediaKeys.length === 0) {
       return json({
-        keyword,
         tweets: [],
         options: {
+          keyword,
+          currentPage: 1,
           pageCount: 1,
         },
       });
     }
+
+    const total = await query.getTotalCountWithMediaKeys({ mediaKeys });
+    const pageCount = Math.ceil(total / perPage);
 
     const tweets = await query.getTweetsWithMediaKeys({
       mediaKeys,
@@ -66,14 +68,19 @@ export const loader = async ({ context, request }: LoaderArgs) => {
     });
 
     return json({
-      keyword,
       tweets: tweets ?? [],
+      options: {
+        keyword,
+        currentPage,
+        pageCount,
+      },
     });
   }
 };
 
 export default function Index() {
-  const { keyword, tweets } = useLoaderData<typeof loader>();
+  const { tweets, options } = useLoaderData<typeof loader>();
+  const { keyword, currentPage, pageCount } = options;
 
   return (
     <div className="h-screen flex flex-col items-center">
@@ -93,11 +100,20 @@ export default function Index() {
             </p>
           </div>
         ) : (
-          <ul className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-            {tweets.map((tweet) => (
-              <TweetCard key={tweet.media_key} tweet={tweet as Tweet} />
-            ))}
-          </ul>
+          <>
+            <Paginate
+              currentPage={currentPage}
+              pageCount={pageCount}
+              onPageChange={() => {
+                console.log("onPageChange");
+              }}
+            />
+            <ul className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+              {tweets.map((tweet) => (
+                <TweetCard key={tweet.media_key} tweet={tweet as Tweet} />
+              ))}
+            </ul>
+          </>
         )}
       </main>
       <Footer />

@@ -944,6 +944,10 @@ input[type="range"]::-ms-fill-lower {
   margin-top: 8rem;
 }
 
+.mt-4 {
+  margin-top: 1rem;
+}
+
 .mt-3 {
   margin-top: 0.75rem;
 }
@@ -986,10 +990,6 @@ input[type="range"]::-ms-fill-lower {
 
 .ml-8 {
   margin-left: 2rem;
-}
-
-.mt-4 {
-  margin-top: 1rem;
 }
 
 .block {
@@ -1256,9 +1256,9 @@ input[type="range"]::-ms-fill-lower {
   text-align: center;
 }
 
-.text-2xl {
-  font-size: 1.5rem;
-  line-height: 2rem;
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 
 .text-sm {
@@ -1273,11 +1273,6 @@ input[type="range"]::-ms-fill-lower {
 
 .text-xl {
   font-size: 1.25rem;
-  line-height: 1.75rem;
-}
-
-.text-lg {
-  font-size: 1.125rem;
   line-height: 1.75rem;
 }
 

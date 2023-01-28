@@ -12,6 +12,22 @@ export class Query {
     return total;
   };
 
+  getTotalCountWithMediaKeys = async ({
+    mediaKeys,
+  }: {
+    mediaKeys: string[];
+  }) => {
+    const { total } = await this.#db
+      .prepare(
+        `SELECT COUNT(*) AS total FROM tweets WHERE media_key IN (?${",?".repeat(
+          mediaKeys.length - 1
+        )});`
+      )
+      .bind(...mediaKeys)
+      .first<{ total: number }>();
+    return total;
+  };
+
   getTweets = async ({
     perPage,
     offset,
