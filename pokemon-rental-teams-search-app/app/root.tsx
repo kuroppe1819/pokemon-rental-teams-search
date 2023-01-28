@@ -9,6 +9,7 @@ import {
 } from "@remix-run/react";
 import Footer from "./components/Footer";
 import Heading from "./components/Heading";
+import LinkButton from "./components/LinkButton";
 import styles from "./styles/app.css";
 
 export function links() {
@@ -59,9 +60,12 @@ export function ErrorBoundary({ error }: { error: Error }) {
             <Heading text="Error!" />
           </div>
           <main className="container px-4 sm:px-20 flex items-center flex-col grow">
-            <p className="mt-4 text-lg text-gray-900">
-              予期せぬエラーが発生しました
+            <p className="mt-4 mb-24 text-lg text-gray-900">
+              予期せぬエラーが発生しました。
             </p>
+            <div>
+              <LinkButton text="トップに戻る" href="/" />
+            </div>
           </main>
           <Footer />
         </div>
