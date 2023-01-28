@@ -20,10 +20,12 @@ export const meta: MetaFunction = () => ({
   charset: "utf-8",
   viewport: "width=device-width,initial-scale=1",
   title: "Pokemon Rental Teams Search",
-  description: "ポケモンSV レンタルチーム,レンタルパーティ検索サイト",
-  "og:image": "/assets/ogp.svg",
+  description:
+    "ポケモンSVのレンタルチーム及びレンタルパーティを検索できるサイト",
+  "og:image": "https://pokemon-rental-teams-search.pages.dev/ogp.svg",
   "og:title": "Pokemon Rental Teams Search",
-  "og:description": "ポケモンSV レンタルチーム,レンタルパーティ検索サイト",
+  "og:description":
+    "ポケモンSVのレンタルチーム及びレンタルパーティを検索できるサイト",
 });
 
 export default function App() {
