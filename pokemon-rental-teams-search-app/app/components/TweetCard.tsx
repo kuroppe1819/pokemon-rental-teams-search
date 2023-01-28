@@ -2,6 +2,11 @@ import Image from "~/components/Image";
 import ImageModal from "./ImageModal";
 
 export default function TweetCard({ tweet }: { tweet: Tweet }) {
+  const date = new Date(tweet.created_at);
+  const createdAt = `${date.getFullYear()}/${
+    date.getMonth() + 1
+  }/${date.getDate()}`;
+
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-md">
       <div className="rounded-t-lg overflow-hidden border-b">
@@ -12,11 +17,12 @@ export default function TweetCard({ tweet }: { tweet: Tweet }) {
         />
       </div>
       <a
-        className="inline-block p-5 w-full hover:bg-gray-100"
+        className="inline-block p-4 w-full hover:bg-gray-100"
         href={`https://twitter.com/${tweet.author_id}/status/${tweet.tweet_id}`}
         target="_blank"
         rel="noopener noreferrer"
       >
+        <p className="mb-4 text-gray-700 text-xs">{`投稿日: ${createdAt}`}</p>
         <div className="flex">
           <div className="w-12 h-12 rounded-full overflow-hidden">
             <Image
