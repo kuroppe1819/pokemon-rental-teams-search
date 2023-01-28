@@ -9,7 +9,7 @@ import TweetCard from "~/components/TweetCard";
 import { Query } from "~/functions/query";
 
 export const loader = async ({ context, request }: LoaderArgs) => {
-  const perPage = 3;
+  const perPage = 30;
   const pageParams = new URL(request.url).searchParams.get("page");
   const pageParamsInt = parseInt(pageParams ?? "");
   const currentPage = isNaN(pageParamsInt) ? 1 : pageParamsInt;
@@ -101,16 +101,18 @@ export default function Index() {
           </div>
         ) : (
           <>
-            <Paginate
-              keyword={keyword}
-              page={currentPage}
-              pageCount={pageCount}
-            />
             <ul className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
               {tweets.map((tweet) => (
                 <TweetCard key={tweet.media_key} tweet={tweet as Tweet} />
               ))}
             </ul>
+            <div className="flex justify-center mt-12">
+              <Paginate
+                keyword={keyword}
+                page={currentPage}
+                pageCount={pageCount}
+              />
+            </div>
           </>
         )}
       </main>
