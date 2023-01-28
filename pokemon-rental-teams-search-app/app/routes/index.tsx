@@ -5,37 +5,55 @@ import Footer from "~/components/Footer";
 import Heading from "~/components/Heading";
 import SearchInput from "~/components/SearchInput";
 import TweetCard from "~/components/TweetCard";
+import { Query } from "~/functions/query";
 
 export const loader = async ({ context, request }: LoaderArgs) => {
-  const PER_PAGE = 3;
+  const perPage = 3;
   const pageParams = new URL(request.url).searchParams.get("page");
-  const page = isNaN(Number(pageParams)) ? 1 : Number(pageParams);
-  const offset = (page - 1) * PER_PAGE;
+  const pageParamsInt = parseInt(pageParams ?? "");
+  const page = isNaN(pageParamsInt) ? 1 : pageParamsInt;
+  const offset = (page - 1) * perPage;
 
-  if (offset > Number.MAX_SAFE_INTEGER) {
+  if (offset < 0 || offset > Number.MAX_SAFE_INTEGER) {
     // TODO: エラーを出す
     return json({
       keyword: null,
       tweets: [],
+      options: {
+        pageCount: null,
+      },
     });
   }
 
-  const db = context.DB as D1Database;
   const keyword = new URL(request.url).searchParams.get("search");
   const WORD_LIMIT = 12;
 
+  const query = new Query(context.DB as D1Database);
+
   if (keyword === null) {
     // 検索クエリが存在しない場合
-    const { results: tweetResults } = await db
-      .prepare(
-        "SELECT * FROM tweets INNER JOIN users ON tweets.author_id = users.author_id ORDER BY created_at DESC LIMIT ? OFFSET ?;"
-      )
-      .bind(PER_PAGE, offset)
-      .all<Tweet>();
+
+    const total = await query.getTotalCount();
+
+    if (total === undefined) {
+      // TODO: エラーを出す
+      return json({
+        keyword: null,
+        tweets: [],
+        options: {
+          pageCount: null,
+        },
+      });
+    }
+
+    const tweets = await query.getTweets({ perPage, offset });
 
     return json({
       keyword,
-      tweets: tweetResults ?? [],
+      tweets: tweets ?? [],
+      options: {
+        pageCount: Math.ceil(total / perPage),
+      },
     });
   }
 
@@ -44,34 +62,36 @@ export const loader = async ({ context, request }: LoaderArgs) => {
     return json({
       keyword: null,
       tweets: [],
+      options: {
+        pageCount: null,
+      },
     });
   }
 
   // 検索クエリが存在する場合
-  const { results: pokemonNameResults } = await db
-    .prepare("SELECT DISTINCT media_key FROM pokemon_name WHERE name = ?;")
-    .bind(keyword)
-    .all<{ media_key: string }>();
+
+  const mediaKeys = await query.getMediaKeysWithPokemonName({ keyword });
 
   // 検索クエリがヒットしなかった場合
-  if (pokemonNameResults === undefined || pokemonNameResults.length === 0) {
+  if (mediaKeys === undefined || mediaKeys.length === 0) {
     return json({
       keyword,
       tweets: [],
+      options: {
+        pageCount: null,
+      },
     });
   }
 
-  const { results: tweetResults } = await db
-    .prepare(
-      `SELECT * FROM tweets INNER JOIN users ON tweets.author_id = users.author_id WHERE media_key IN (?${",?".repeat(
-        pokemonNameResults.length - 1
-      )}) ORDER BY created_at DESC LIMIT ? OFFSET ?;`
-    )
-    .bind(...pokemonNameResults.map((v) => v.media_key), PER_PAGE, offset)
-    .all<Tweet>();
+  const tweets = await query.getTweetsWithMediaKeys({
+    mediaKeys,
+    perPage,
+    offset,
+  });
+
   return json({
     keyword,
-    tweets: tweetResults ?? [],
+    tweets: tweets ?? [],
   });
 };
 
