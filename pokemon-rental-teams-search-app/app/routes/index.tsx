@@ -7,8 +7,6 @@ import SearchInput from "~/components/SearchInput";
 import TweetCard from "~/components/TweetCard";
 
 export const loader = async ({ context, request }: LoaderArgs) => {
-  const keyword = new URL(request.url).searchParams.get("search");
-
   const PER_PAGE = 3;
   const pageParams = new URL(request.url).searchParams.get("page");
   const page = isNaN(Number(pageParams)) ? 1 : Number(pageParams);
@@ -23,6 +21,8 @@ export const loader = async ({ context, request }: LoaderArgs) => {
   }
 
   const db = context.DB as D1Database;
+  const keyword = new URL(request.url).searchParams.get("search");
+  const WORD_LIMIT = 12;
 
   if (keyword === null) {
     // 検索クエリが存在しない場合
@@ -32,38 +32,47 @@ export const loader = async ({ context, request }: LoaderArgs) => {
       )
       .bind(PER_PAGE, offset)
       .all<Tweet>();
-    return json({
-      keyword,
-      tweets: tweetResults ?? [],
-    });
-  } else {
-    // 検索クエリが存在する場合
-    const { results: pokemonNameResults } = await db
-      .prepare("SELECT DISTINCT media_key FROM pokemon_name WHERE name = ?;")
-      .bind(keyword)
-      .all<{ media_key: string }>();
 
-    // 検索クエリがヒットしなかった場合
-    if (pokemonNameResults === undefined || pokemonNameResults.length === 0) {
-      return json({
-        keyword,
-        tweets: [],
-      });
-    }
-
-    const { results: tweetResults } = await db
-      .prepare(
-        `SELECT * FROM tweets INNER JOIN users ON tweets.author_id = users.author_id WHERE media_key IN (?${",?".repeat(
-          pokemonNameResults.length - 1
-        )}) ORDER BY created_at DESC LIMIT ? OFFSET ?;`
-      )
-      .bind(...pokemonNameResults.map((v) => v.media_key), PER_PAGE, offset)
-      .all<Tweet>();
     return json({
       keyword,
       tweets: tweetResults ?? [],
     });
   }
+
+  if (keyword.length > WORD_LIMIT) {
+    // TODO: エラーを出す
+    return json({
+      keyword: null,
+      tweets: [],
+    });
+  }
+
+  // 検索クエリが存在する場合
+  const { results: pokemonNameResults } = await db
+    .prepare("SELECT DISTINCT media_key FROM pokemon_name WHERE name = ?;")
+    .bind(keyword)
+    .all<{ media_key: string }>();
+
+  // 検索クエリがヒットしなかった場合
+  if (pokemonNameResults === undefined || pokemonNameResults.length === 0) {
+    return json({
+      keyword,
+      tweets: [],
+    });
+  }
+
+  const { results: tweetResults } = await db
+    .prepare(
+      `SELECT * FROM tweets INNER JOIN users ON tweets.author_id = users.author_id WHERE media_key IN (?${",?".repeat(
+        pokemonNameResults.length - 1
+      )}) ORDER BY created_at DESC LIMIT ? OFFSET ?;`
+    )
+    .bind(...pokemonNameResults.map((v) => v.media_key), PER_PAGE, offset)
+    .all<Tweet>();
+  return json({
+    keyword,
+    tweets: tweetResults ?? [],
+  });
 };
 
 export default function Index() {
