@@ -1,5 +1,3 @@
-import { useRef } from "react";
-
 type Props = {
   src: string | undefined;
   alt: string;
@@ -7,15 +5,11 @@ type Props = {
 };
 
 export default function Image({ src, alt, fallbackSrc }: Props) {
-  const ref = useRef<HTMLImageElement>(null);
-  const argSrc = src ?? fallbackSrc;
-
-  const onError = () => {
-    const el = ref.current;
-    if (el) {
-      el.onerror = null;
-      el.src = fallbackSrc;
-    }
-  };
-  return <img ref={ref} src={argSrc} onError={onError} alt={alt} />;
+  return (
+    <img
+      src={src ?? fallbackSrc}
+      onError={(e) => ((e.target as HTMLImageElement).src = fallbackSrc)}
+      alt={alt}
+    />
+  );
 }
