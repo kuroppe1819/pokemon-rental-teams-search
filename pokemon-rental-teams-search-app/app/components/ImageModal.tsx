@@ -30,7 +30,7 @@ export default function ImageModal({ src, alt, fallbackSrc }: Props) {
           className="fixed left-0 top-0 w-full h-full bg-black bg-opacity-50 z-10"
           onClick={handleClose}
         >
-          <div className="w-full h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-center items-center">
+          <div className="w-full h-full flex justify-center items-center">
             <Image src={src} alt={alt} fallbackSrc={fallbackSrc} />
           </div>
           <button className="absolute top-0.5 right-0.5 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14">
