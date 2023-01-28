@@ -20,7 +20,7 @@ export const loader = async ({ context, request }: LoaderArgs) => {
   }
 
   const keyword = new URL(request.url).searchParams.get("search");
-  const wordLimit = 12;
+  const wordLimit = 100;
   const query = new Query(context.DB as D1Database);
 
   if (keyword === null) {
