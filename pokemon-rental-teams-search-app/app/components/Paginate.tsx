@@ -23,8 +23,6 @@ export default function Paginate({ keyword, page, pageCount }: Props) {
 
   return (
     <div>
-      <div>{page}</div>
-      <div>{pageCount}</div>
       <Link
         to={`/?page=${page - 1}${addSearchParameter}`}
         tabIndex={previousDisabled ? -1 : 0}

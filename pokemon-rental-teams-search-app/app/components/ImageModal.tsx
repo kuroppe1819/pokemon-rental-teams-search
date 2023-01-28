@@ -22,7 +22,7 @@ export default function ImageModal({ src, alt, fallbackSrc }: Props) {
 
   return (
     <>
-      <div className="cursor-pointer" onClick={handleOpen} tabIndex={0}>
+      <div className="cursor-zoom-in" onClick={handleOpen} tabIndex={0}>
         <Image src={src} alt={alt} fallbackSrc={fallbackSrc} />
       </div>
       {isOpen && (

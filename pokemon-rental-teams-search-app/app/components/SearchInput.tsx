@@ -38,6 +38,7 @@ export default function SearchInput({ defaultValue }: Props) {
           placeholder="ポケモン名"
           name="search"
           defaultValue={defaultValue ?? undefined}
+          maxLength={12}
           required
         />
       </div>
