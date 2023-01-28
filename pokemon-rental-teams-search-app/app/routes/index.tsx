@@ -102,11 +102,9 @@ export default function Index() {
         ) : (
           <>
             <Paginate
-              currentPage={currentPage}
+              keyword={keyword}
+              defaultPage={currentPage}
               pageCount={pageCount}
-              onPageChange={() => {
-                console.log("onPageChange");
-              }}
             />
             <ul className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
               {tweets.map((tweet) => (
