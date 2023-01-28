@@ -8,14 +8,29 @@ import TweetCard from "~/components/TweetCard";
 
 export const loader = async ({ context, request }: LoaderArgs) => {
   const keyword = new URL(request.url).searchParams.get("search");
+
+  const PER_PAGE = 3;
+  const pageParams = new URL(request.url).searchParams.get("page");
+  const page = isNaN(Number(pageParams)) ? 1 : Number(pageParams);
+  const offset = (page - 1) * PER_PAGE;
+
+  if (offset > Number.MAX_SAFE_INTEGER) {
+    // TODO: エラーを出す
+    return json({
+      keyword: null,
+      tweets: [],
+    });
+  }
+
   const db = context.DB as D1Database;
 
   if (keyword === null) {
     // 検索クエリが存在しない場合
     const { results: tweetResults } = await db
       .prepare(
-        "SELECT * FROM tweets INNER JOIN users ON tweets.author_id = users.author_id ORDER BY created_at DESC;"
+        "SELECT * FROM tweets INNER JOIN users ON tweets.author_id = users.author_id ORDER BY created_at DESC LIMIT ? OFFSET ?;"
       )
+      .bind(PER_PAGE, offset)
       .all<Tweet>();
     return json({
       keyword,
@@ -40,9 +55,9 @@ export const loader = async ({ context, request }: LoaderArgs) => {
       .prepare(
         `SELECT * FROM tweets INNER JOIN users ON tweets.author_id = users.author_id WHERE media_key IN (?${",?".repeat(
           pokemonNameResults.length - 1
-        )}) ORDER BY created_at DESC;`
+        )}) ORDER BY created_at DESC LIMIT ? OFFSET ?;`
       )
-      .bind(...pokemonNameResults.map((v) => v.media_key))
+      .bind(...pokemonNameResults.map((v) => v.media_key), PER_PAGE, offset)
       .all<Tweet>();
     return json({
       keyword,
@@ -65,7 +80,11 @@ export default function Index() {
         </div>
         {tweets.length === 0 ? (
           <div className="flex justify-center">
-            <p className="font-normal text-lg text-gray-900">{`「${keyword}」を含むレンタルチームは見つかりませんでした。`}</p>
+            <p className="font-normal text-lg text-gray-900">
+              {keyword === null
+                ? "レンタルチームが見つかりませんでした"
+                : `「${keyword}」を含むレンタルチームが見つかりませんでした。`}
+            </p>
           </div>
         ) : (
           <ul className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
