@@ -1,5 +1,4 @@
 import { Form } from "@remix-run/react";
-import { useRef } from "react";
 
 type Props = {
   defaultValue: string | null;

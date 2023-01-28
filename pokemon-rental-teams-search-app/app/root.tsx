@@ -7,6 +7,8 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import Footer from "./components/Footer";
+import Heading from "./components/Heading";
 import styles from "./styles/app.css";
 
 export function links() {
@@ -33,6 +35,33 @@ export default function App() {
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
+      </body>
+    </html>
+  );
+}
+
+export function ErrorBoundary({ error }: { error: Error }) {
+  return (
+    <html>
+      <head>
+        <title>Error Page | Pokemon Rental Teams Search</title>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <div className="h-screen flex flex-col items-center">
+          <div className="mt-32">
+            <Heading text="Error!" />
+          </div>
+          <main className="container px-4 sm:px-20 flex items-center flex-col grow">
+            <p className="mt-4 text-lg text-gray-900">
+              予期せぬエラーが発生しました
+            </p>
+          </main>
+          <Footer />
+        </div>
+
+        <Scripts />
       </body>
     </html>
   );

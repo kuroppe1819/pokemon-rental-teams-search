@@ -15,19 +15,11 @@ export const loader = async ({ context, request }: LoaderArgs) => {
   const offset = (page - 1) * perPage;
 
   if (offset < 0 || offset > Number.MAX_SAFE_INTEGER) {
-    // TODO: エラーを出す
-    return json({
-      keyword: null,
-      tweets: [],
-      options: {
-        pageCount: null,
-      },
-    });
+    throw new Error("offset exceeds threshold value.");
   }
 
   const keyword = new URL(request.url).searchParams.get("search");
-  const WORD_LIMIT = 12;
-
+  const wordLimit = 12;
   const query = new Query(context.DB as D1Database);
 
   if (keyword === null) {
@@ -36,14 +28,7 @@ export const loader = async ({ context, request }: LoaderArgs) => {
     const total = await query.getTotalCount();
 
     if (total === undefined) {
-      // TODO: エラーを出す
-      return json({
-        keyword: null,
-        tweets: [],
-        options: {
-          pageCount: null,
-        },
-      });
+      throw new Error("total is undefined.");
     }
 
     const tweets = await query.getTweets({ perPage, offset });
@@ -55,44 +40,36 @@ export const loader = async ({ context, request }: LoaderArgs) => {
         pageCount: Math.ceil(total / perPage),
       },
     });
-  }
+  } else {
+    // 検索クエリが存在する場合
 
-  if (keyword.length > WORD_LIMIT) {
-    // TODO: エラーを出す
-    return json({
-      keyword: null,
-      tweets: [],
-      options: {
-        pageCount: null,
-      },
+    if (keyword.length > wordLimit) {
+      throw new Error("keyword length exceeds threshold value.");
+    }
+
+    // 検索クエリがヒットしなかった場合
+    const mediaKeys = await query.getMediaKeysWithPokemonName({ keyword });
+    if (mediaKeys === undefined || mediaKeys.length === 0) {
+      return json({
+        keyword,
+        tweets: [],
+        options: {
+          pageCount: 1,
+        },
+      });
+    }
+
+    const tweets = await query.getTweetsWithMediaKeys({
+      mediaKeys,
+      perPage,
+      offset,
     });
-  }
 
-  // 検索クエリが存在する場合
-
-  const mediaKeys = await query.getMediaKeysWithPokemonName({ keyword });
-
-  // 検索クエリがヒットしなかった場合
-  if (mediaKeys === undefined || mediaKeys.length === 0) {
     return json({
       keyword,
-      tweets: [],
-      options: {
-        pageCount: null,
-      },
+      tweets: tweets ?? [],
     });
   }
-
-  const tweets = await query.getTweetsWithMediaKeys({
-    mediaKeys,
-    perPage,
-    offset,
-  });
-
-  return json({
-    keyword,
-    tweets: tweets ?? [],
-  });
 };
 
 export default function Index() {
