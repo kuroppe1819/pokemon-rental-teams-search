@@ -26,7 +26,7 @@ export default function Paginate({ keyword, page, pageCount }: Props) {
       <ul className="inline-flex items-center -space-x-px">
         <li>
           <Link
-            className={`block px-3 py-2 ml-0 leading-tight  bg-white border border-gray-300 rounded-l-lg ${
+            className={`block px-3 py-2 ml-0 leading-tight  bg-white border border-gray-300 rounded-md sm:rounded-l-lg ${
               previousDisabled
                 ? "text-gray-300 pointer-events-none"
                 : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
@@ -108,7 +108,7 @@ export default function Paginate({ keyword, page, pageCount }: Props) {
         )}
         <li>
           <Link
-            className={`block px-3 py-2 ml-0 leading-tight  bg-white border border-gray-300 rounded-r-lg ${
+            className={`block px-3 py-2 ml-0 leading-tight  bg-white border border-gray-300 rounded-md sm:rounded-r-lg ${
               nextDisabled
                 ? "text-gray-300 pointer-events-none"
                 : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
