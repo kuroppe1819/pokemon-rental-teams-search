@@ -23,16 +23,21 @@ export const meta: MetaFunction = () => ({
   title: "Pokemon Rental Teams Search",
   description:
     "ポケモンSVのレンタルチーム及びレンタルパーティを検索できるサイト",
-  "og:image": "https://pokemon-rental-teams-search.pages.dev/ogp.svg",
-  "og:title": "Pokemon Rental Teams Search",
+  "og:url": "https://pokemon-rental-teams-search.pages.dev",
+  "og:type": "website",
+  "og:title": "ポケモンSV レンタルチーム検索",
   "og:description":
     "ポケモンSVのレンタルチーム及びレンタルパーティを検索できるサイト",
+  "og:site_name": "Pokemon Rental Teams Search",
+  "og:image": "https://pokemon-rental-teams-search.pages.dev/ogp.svg",
+  "twitter:card": "summary",
+  "twitter:site": "@mys_x101",
 });
 
 export default function App() {
   return (
     <html lang="en">
-      <head>
+      <head prefix="og:http://ogp.me/ns#">
         <Meta />
         <Links />
       </head>
