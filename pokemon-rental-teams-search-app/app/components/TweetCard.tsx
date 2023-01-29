@@ -3,9 +3,9 @@ import ImageModal from "./ImageModal";
 
 export default function TweetCard({ tweet }: { tweet: Tweet }) {
   const date = new Date(tweet.created_at);
-  const createdAt = `${date.getFullYear()}/${
-    date.getMonth() + 1
-  }/${date.getDate()}`;
+  const createdAt = `${date.getUTCFullYear()}/${
+    date.getUTCMonth() + 1
+  }/${date.getUTCDate()}`;
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-md">
