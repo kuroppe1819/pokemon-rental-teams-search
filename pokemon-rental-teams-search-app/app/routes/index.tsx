@@ -9,7 +9,7 @@ import TweetCard from "~/components/TweetCard";
 import { Query } from "~/functions/query";
 
 export const loader = async ({ context, request }: LoaderArgs) => {
-  const perPage = 30;
+  const perPage = 18;
   const pageParams = new URL(request.url).searchParams.get("page");
   const pageParamsInt = parseInt(pageParams ?? "");
   const currentPage = isNaN(pageParamsInt) ? 1 : pageParamsInt;
