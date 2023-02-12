@@ -20,14 +20,14 @@ export const meta: MetaFunction = () => ({
   lang: "ja",
   charset: "utf-8",
   viewport: "width=device-width,initial-scale=1",
-  title: "Pokemon Rental Teams Search",
+  title: "【ポケモンSV】レンタルチーム検索 - Pokemon Rental Teams Search",
   description:
-    "ポケモンSVのレンタルチーム及びレンタルパーティを検索できるサイト",
+    "Twitterに公開されているポケモンSVのレンタルチーム及びレンタルパーティを検索できるサイト",
   "og:url": "https://pokemon-rental-teams-search.pages.dev",
   "og:type": "website",
-  "og:title": "ポケモンSV レンタルチーム検索",
+  "og:title": "【ポケモンSV】レンタルチーム検索",
   "og:description":
-    "ポケモンSVのレンタルチーム及びレンタルパーティを検索できるサイト",
+    "Twitterに公開されているポケモンSVのレンタルチーム及びレンタルパーティを検索できるサイト",
   "og:site_name": "Pokemon Rental Teams Search",
   "og:image": "https://pokemon-rental-teams-search.pages.dev/ogp.png",
   "twitter:card": "summary",
