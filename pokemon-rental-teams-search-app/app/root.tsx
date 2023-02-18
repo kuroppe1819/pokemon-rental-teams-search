@@ -47,6 +47,11 @@ export default function App() {
         <Scripts />
         <LiveReload />
       </body>
+      <script
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon='{"token": "09c7b88359c04fb9b48f7b0d044023ab"}'
+      ></script>
     </html>
   );
 }
