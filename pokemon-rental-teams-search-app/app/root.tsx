@@ -28,7 +28,6 @@ export const meta: MetaFunction = () => ({
   "og:title": "【ポケモンSV】レンタルチーム検索",
   "og:description":
     "Twitterに公開されているポケモンSVのレンタルチーム及びレンタルパーティを検索できるサイト",
-  "og:site_name": "Pokemon Rental Teams Search",
   "og:image": "https://pokemon-rental-teams-search.pages.dev/ogp.png",
   "twitter:card": "summary",
   "twitter:site": "@mys_x101",
