@@ -36,6 +36,7 @@ export const meta: MetaFunction = () => ({
 export default function App() {
   return (
     <html lang="en">
+      <title>【ポケモンSV】レンタルチーム検索 - Pokemon Rental Teams Search</title>
       <head prefix="og:http://ogp.me/ns#">
         <Meta />
         <Links />
