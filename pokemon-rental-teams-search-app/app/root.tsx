@@ -7,6 +7,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import Analytics from "./components/Analytics";
 import Footer from "./components/Footer";
 import Heading from "./components/Heading";
 import LinkButton from "./components/LinkButton";
@@ -36,7 +37,6 @@ export const meta: MetaFunction = () => ({
 export default function App() {
   return (
     <html lang="en">
-      <title>【ポケモンSV】レンタルチーム検索 - Pokemon Rental Teams Search</title>
       <head prefix="og:http://ogp.me/ns#">
         <Meta />
         <Links />
@@ -44,14 +44,10 @@ export default function App() {
       <body>
         <Outlet />
         <ScrollRestoration />
+        <Analytics />
         <Scripts />
         <LiveReload />
       </body>
-      <script
-        defer
-        src="https://static.cloudflareinsights.com/beacon.min.js"
-        data-cf-beacon='{"token": "09c7b88359c04fb9b48f7b0d044023ab"}'
-      ></script>
     </html>
   );
 }
@@ -79,7 +75,6 @@ export function ErrorBoundary({ error }: { error: Error }) {
           </main>
           <Footer />
         </div>
-
         <Scripts />
       </body>
     </html>
