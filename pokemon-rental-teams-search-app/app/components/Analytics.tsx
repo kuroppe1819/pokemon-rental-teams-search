@@ -11,7 +11,7 @@ export default function Analytics() {
       );
       script.setAttribute(
         "data-cf-beacon",
-        "{token: '09c7b88359c04fb9b48f7b0d044023ab'}"
+        '{"token": "09c7b88359c04fb9b48f7b0d044023ab"}'
       );
       script.defer = true;
       document.body.appendChild(script);
