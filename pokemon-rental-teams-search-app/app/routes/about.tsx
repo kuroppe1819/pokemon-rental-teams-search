@@ -28,7 +28,7 @@ export default function About() {
               本サービスに関する質問や改善要望があれば、
               <a
                 className="text-blue-800 hover:underline font-normal"
-                href="https://twitter.com/mys_x101"
+                href="https://twitter.com/kuroppe1819"
                 target="_blank"
                 rel="noopener noreferrer"
               >

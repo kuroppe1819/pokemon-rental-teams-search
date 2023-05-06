@@ -31,7 +31,7 @@ export default function Heading() {
           <li>
             <a
               className="text-gray-500 hover:text-gray-900"
-              href="https://twitter.com/mys_x101"
+              href="https://twitter.com/kuroppe1819"
               target="_blank"
               rel="noopener noreferrer"
             >
