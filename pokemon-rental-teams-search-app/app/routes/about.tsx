@@ -25,7 +25,7 @@ export default function About() {
               管理者のもやし丸と申します。本サービスは私個人で開発、運用しております。
             </p>
             <p>
-              本サービスに関する質問や改善要望があれば、
+              本サービスに関する質問や改善要望があれば{" "}
               <a
                 className="text-blue-800 hover:underline font-normal"
                 href="https://twitter.com/kuroppe1819"
@@ -45,6 +45,20 @@ export default function About() {
             <p>本サービスは、上記の企業様とは一切関連性はありません。</p>
             <p>
               当サイトが提供する独自の文章やプログラムの所有権及び知的財産権は当方に帰属します。
+            </p>
+          </li>
+          <li className="mb-6">
+            <h3 className="text-lg font-medium">使用ライブラリのライセンス</h3>
+            <p>
+              <a
+                className="text-blue-800 hover:underline font-normal"
+                href="/licenses.txt"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                licenses.txt
+              </a>{" "}
+              に記載しております。
             </p>
           </li>
         </ul>

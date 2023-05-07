@@ -4,5 +4,6 @@ node_modules
 /functions/\[\[path\]\].js
 /functions/\[\[path\]\].js.map
 /public/build
+/public/licenses.txt
 .env
 /app/styles/app.css
