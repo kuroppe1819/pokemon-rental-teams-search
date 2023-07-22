@@ -1,5 +1,6 @@
 # pokemon-rental-teams-search
-![logo](https://github.com/kuroppe1819/pokemon-rental-teams-search/assets/17245737/2215c42e-1081-4266-832b-4f85acf75c8d)
+
+![ogp](https://github.com/kuroppe1819/pokemon-rental-teams-search/assets/17245737/58bbc487-1a6a-4ce7-af6d-5beaaadac507)
 
 The pokemon-rental-teams-search is a search application that you can find rental teams shared on Twitter.
 
@@ -11,7 +12,7 @@ To run this application, you require [pokemon-rental-teams-search-api](https://g
 
 Web page implementation.
 
-![pokemon-rental-teams-search](https://github.com/kuroppe1819/pokemon-rental-teams-search/assets/17245737/f7da2941-c940-4425-949d-bd47a84d3465)
+![pokemon-rental-teams-search](https://github.com/kuroppe1819/pokemon-rental-teams-search/assets/17245737/611a425f-0af3-4ff4-844f-615335b90359)
 
 ## pokemon-rental-teams-search-data-sync
 
